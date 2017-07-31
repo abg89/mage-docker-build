@@ -1,0 +1,29 @@
+FROM php:5-apache
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libxml2-dev \
+    libmcrypt-dev \
+    libpng-dev \
+    libz-dev \
+    libjpeg-dev \
+    exim4-daemon-light
+
+RUN docker-php-ext-configure gd --with-jpeg-dir=/usr/include
+RUN docker-php-ext-install \
+    pdo_mysql \
+    mcrypt \
+    gd \
+    soap \
+    zip \
+    opcache
+
+RUN echo "memory_limit = 1024M" > /usr/local/etc/php/conf.d/php.ini
+RUN a2enmod rewrite
+
+RUN sed -i '1a SetEnvIf X-Forwarded-Proto https HTTPS=on' /etc/apache2/sites-enabled/000-default.conf
+RUN sed -ie "s/local/internet/" /etc/exim4/update-exim4.conf.conf && update-exim4.conf
+
+ADD https://files.magerun.net/n98-magerun.phar /usr/local/bin/magerun
+
+COPY ./scripts/* /usr/local/bin/
+RUN chmod +x /usr/local/bin/*
