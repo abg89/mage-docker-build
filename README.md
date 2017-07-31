@@ -13,7 +13,7 @@ chmod +x /usr/local/bin/docker-compose
 ### Get and run docker environment
 
 ```
-git clone https://github.com/g4xd/mage-docker-build.git
+git clone https://github.com/abg89/mage-docker-build.git
 cd mage-docker-build
 docker-compose up -d --build
 ```
