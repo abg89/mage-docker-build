@@ -9,7 +9,8 @@ services:
       #- '443:443'
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      #- ./data/certs:/etc/nginx/certs
+      #- ./build/certs:/etc/nginx/certs
+      #- ./build/htpasswd:/etc/nginx/htpasswd
 
   db:
     image: percona
@@ -27,8 +28,9 @@ services:
     hostname: mage
     volumes:
       - ./data/www/mage:/var/www/html
+      - ./build/authorized_keys:/root/.ssh/authorized_keys
     environment:
-            - VIRTUAL_HOST=http://127.0.0.1
+      - VIRTUAL_HOST=http://127.0.0.1
     env_file:
       - ./build/env
     #ports: '2222:22'
