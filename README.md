@@ -14,7 +14,7 @@ chmod +x /usr/local/bin/docker-compose
 
 ```
 git clone https://github.com/g4xd/mage-docker-build.git
-cd mage-build
+cd mage-docker-build
 docker-compose up -d --build
 ```
 
